@@ -311,3 +311,13 @@
     display: none;
   }
 }
+
+// ✅ Rotating logo animation
+.auth-logo-rotate {
+    animation: rotateLogo 4s linear infinite;
+}
+
+@keyframes rotateLogo {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+}
