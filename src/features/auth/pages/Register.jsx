@@ -38,8 +38,20 @@ const Register = () => {
                 <div className="auth-card-glow"></div>
                 <div className="auth-badge">JOIN FREE</div>
 
+                {/* ✅ Rotating SVG Logo — same as Login */}
                 <div className="auth-logo">
-                    <div className="auth-logo-icon">⚡</div>
+                    <div className="auth-logo-icon">
+                        <svg
+                            className="auth-logo-rotate"
+                            width="22" height="22"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <circle cx="12" cy="12" r="10" stroke="#fff" strokeWidth="2"/>
+                            <path d="M12 6v6l4 2" stroke="#fff" strokeWidth="2" strokeLinecap="round"/>
+                        </svg>
+                    </div>
                     <span className="auth-logo-text">Interview<span>IQ</span></span>
                 </div>
 
@@ -47,10 +59,14 @@ const Register = () => {
                 <p className="auth-subtitle">Create your free account today</p>
 
                 <form onSubmit={handleSubmit} className="auth-form">
+
                     <div className="auth-field">
                         <label htmlFor="username">Username</label>
                         <div className="auth-input-wrap">
-                            <svg className="auth-input-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                            <svg className="auth-input-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                                <circle cx="12" cy="7" r="4"/>
+                            </svg>
                             <input
                                 id="username"
                                 type="text"
@@ -65,7 +81,10 @@ const Register = () => {
                     <div className="auth-field">
                         <label htmlFor="email">Email Address</label>
                         <div className="auth-input-wrap">
-                            <svg className="auth-input-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                            <svg className="auth-input-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                                <polyline points="22,6 12,13 2,6"/>
+                            </svg>
                             <input
                                 id="email"
                                 type="email"
@@ -80,7 +99,10 @@ const Register = () => {
                     <div className="auth-field">
                         <label htmlFor="password">Password</label>
                         <div className="auth-input-wrap">
-                            <svg className="auth-input-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                            <svg className="auth-input-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                            </svg>
                             <input
                                 id="password"
                                 type={showPass ? "text" : "password"}
@@ -101,8 +123,12 @@ const Register = () => {
 
                     <button type="submit" className="auth-btn" disabled={loading}>
                         {loading ? "Creating..." : "Create Account"}
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                            <line x1="5" y1="12" x2="19" y2="12"/>
+                            <polyline points="12 5 19 12 12 19"/>
+                        </svg>
                     </button>
+
                 </form>
 
                 <p className="auth-footer">
