@@ -7,24 +7,65 @@ import Navbar from "../../auth/components/Navbar"
 
 const Home = () => {
 
-    const { loading, generateReport,reports } = useInterview()
-    const [ jobDescription, setJobDescription ] = useState("")
-    const [ selfDescription, setSelfDescription ] = useState("")
+    const { loading, generateReport, reports } = useInterview()
+    const [jobDescription, setJobDescription] = useState("")
+    const [selfDescription, setSelfDescription] = useState("")
     const [selectedFile, setSelectedFile] = useState(null)
     const resumeInputRef = useRef()
-
     const navigate = useNavigate()
 
     const handleGenerateReport = async () => {
         const resumeFile = selectedFile || resumeInputRef.current.files[0]
+
+        if (!jobDescription.trim()) {
+            alert("Job Description required hai ❗")
+            return
+        }
+
+        if (!resumeFile && !selfDescription.trim()) {
+            alert("Resume ya Self Description me se ek zaroori hai ❗")
+            return
+        }
+
         const data = await generateReport({ jobDescription, selfDescription, resumeFile })
+
+        if (!data || !data._id) {
+            alert("Generation failed — please try again 🔄")
+            return
+        }
+
         navigate(`/interview/${data._id}`)
     }
 
+    // ✅ PREMIUM LOADING SCREEN
     if (loading) {
         return (
             <main className='loading-screen'>
-                <h1>Loading your interview plan...</h1>
+                <div className="loader-container">
+                    <div className="ai-loader">
+                        <div className="ai-ring ring-1"></div>
+                        <div className="ai-ring ring-2"></div>
+                        <div className="ai-ring ring-3"></div>
+                        <div className="ai-core">
+                            <svg
+                                width="28" height="28"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                style={{ animation: 'rotateLogo 4s linear infinite' }}
+                            >
+                                <circle cx="12" cy="12" r="10" stroke="#ec4899" strokeWidth="2"/>
+                                <path d="M12 6v6l4 2" stroke="#ec4899" strokeWidth="2" strokeLinecap="round"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <h2 className="loader-title">Generating Your Interview Plan</h2>
+                    <p className="loader-sub">AI is analyzing your profile... ✨</p>
+                    <div className="loader-steps">
+                        <div className="step active">📄 Parsing Resume</div>
+                        <div className="step active">🧠 AI Analyzing</div>
+                        <div className="step">📊 Building Report</div>
+                    </div>
+                </div>
             </main>
         )
     }
@@ -53,12 +94,12 @@ const Home = () => {
                             <span className='badge badge--required'>Required</span>
                         </div>
                         <textarea
-                            onChange={(e) => { setJobDescription(e.target.value) }}
+                            onChange={(e) => setJobDescription(e.target.value)}
                             className='panel__textarea'
                             placeholder={`Paste the full job description here...\ne.g. 'Senior Frontend Engineer at Google requires proficiency in React, TypeScript, and large-scale system design...'`}
                             maxLength={5000}
                         />
-                        <div className='char-counter'>0 / 5000 chars</div>
+                        <div className='char-counter'>{jobDescription.length} / 5000 chars</div>
                     </div>
 
                     {/* Vertical Divider */}
@@ -86,23 +127,23 @@ const Home = () => {
                                 <p className='dropzone__title'>Click to upload or drag &amp; drop</p>
                                 <p className='dropzone__subtitle'>PDF or DOCX (Max 5MB)</p>
                                 {selectedFile && (
-  <p style={{ 
-    marginTop: "10px", 
-    fontSize: "0.85rem", 
-    color: "#22c55e" 
-  }}>
-    ✅ {selectedFile.name}
-  </p>
-)}
-                                <input 
-  ref={resumeInputRef} 
-  hidden 
-  type='file' 
-  id='resume' 
-  name='resume' 
-  accept='.pdf,.docx'
-  onChange={(e) => setSelectedFile(e.target.files[0])}
-/>
+                                    <p style={{
+                                        marginTop: "10px",
+                                        fontSize: "0.85rem",
+                                        color: "#22c55e"
+                                    }}>
+                                        ✅ {selectedFile.name}
+                                    </p>
+                                )}
+                                <input
+                                    ref={resumeInputRef}
+                                    hidden
+                                    type='file'
+                                    id='resume'
+                                    name='resume'
+                                    accept='.pdf,.docx'
+                                    onChange={(e) => setSelectedFile(e.target.files[0])}
+                                />
                             </label>
                         </div>
 
@@ -113,7 +154,7 @@ const Home = () => {
                         <div className='self-description'>
                             <label className='section-label' htmlFor='selfDescription'>Quick Self-Description</label>
                             <textarea
-                                onChange={(e) => { setSelfDescription(e.target.value) }}
+                                onChange={(e) => setSelfDescription(e.target.value)}
                                 id='selfDescription'
                                 name='selfDescription'
                                 className='panel__textarea panel__textarea--short'
@@ -136,9 +177,11 @@ const Home = () => {
                     <span className='footer-info'>AI-Powered Strategy Generation &bull; Approx 30s</span>
                     <button
                         onClick={handleGenerateReport}
-                        className='generate-btn'>
+                        disabled={loading}
+                        className='generate-btn'
+                    >
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z" /></svg>
-                        Generate My Interview Strategy
+                        {loading ? "Generating..." : "Generate My Interview Strategy"}
                     </button>
                 </div>
             </div>
