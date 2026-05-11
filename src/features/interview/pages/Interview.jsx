@@ -70,13 +70,38 @@ const Interview = () => {
 
 
 
-    if (loading || !report) {
-        return (
-            <main className='loading-screen'>
-                <h1>Loading your interview plan...</h1>
-            </main>
-        )
-    }
+    // ✅ Isko ye karo
+if (loading || !report) {
+    return (
+        <main className='loading-screen'>
+            <div className="loader-container">
+                <div className="ai-loader">
+                    <div className="ai-ring ring-1"></div>
+                    <div className="ai-ring ring-2"></div>
+                    <div className="ai-ring ring-3"></div>
+                    <div className="ai-core">
+                        <svg
+                            width="28" height="28"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            style={{ animation: 'rotateLogo 4s linear infinite' }}
+                        >
+                            <circle cx="12" cy="12" r="10" stroke="#ec4899" strokeWidth="2"/>
+                            <path d="M12 6v6l4 2" stroke="#ec4899" strokeWidth="2" strokeLinecap="round"/>
+                        </svg>
+                    </div>
+                </div>
+                <h2 className="loader-title">Preparing Your Interview Plan</h2>
+                <p className="loader-sub">Fetching your personalized report... ✨</p>
+                <div className="loader-steps">
+                    <div className="step active">📄 Loading Report</div>
+                    <div className="step active">🧠 Processing Data</div>
+                    <div className="step">📊 Rendering Results</div>
+                </div>
+            </div>
+        </main>
+    )
+}
 
     const scoreColor =
         report.matchScore >= 80 ? 'score--high' :
